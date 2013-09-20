@@ -1,0 +1,1 @@
+include citrix_xd7

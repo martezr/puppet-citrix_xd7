@@ -1,0 +1,17 @@
+{
+  "name": "martez-citrix_xd7",
+  "version": "0.1.0",
+  "summary": "Puppet module to install Citrix Xendesktop 7",
+  "author": "Martez Reed",
+  "description": "Puppet module to install Citrix Xendesktop 7",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib"
+    }
+  ],
+  "types": [],
+  "checksums": {},
+  "source": "",
+  "project_page": "",
+  "license": ""
+}
