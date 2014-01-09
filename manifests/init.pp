@@ -68,9 +68,6 @@ class citrix_xd7 (
 )
 
 {
- 
-  # Include powershell module for windows feature installation 
-  include 'citrix_xd7::param::powershell'
   
   # Validate all variables
   #validate_bool($quiet)    # ToDo
@@ -133,8 +130,9 @@ class citrix_xd7 (
 
   # Add Dot Net Framework Feature
   exec {'Install dotnet':
-      command   => "${citrix_xd7::param::powershell::command} -Command \"Import-Module ServerManager; Add-WindowsFeature Net-Framework-Core\"",
-      path      => "${citrix_xd7::param::powershell::path};${::path}",    
+      command   => "Add-WindowsFeature Net-Framework-Core",
+      provider  => powershell,
+      unless    =>  "(Get-WindowsFeature -name Net-Framework-Core).Installed", # Check if Net Framework has already been installed    
   } ->
   
   # Install Xendesktop 7 from installation source

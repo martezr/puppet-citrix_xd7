@@ -1,0 +1,7 @@
+1-8-2014
+----------------
+1. Added a Changelog
+2. Added powershell module (joshcooper-powershell) dependency
+3. init.pp - Removed separate powershell call and replaced with puppet powershell module dependency
+4. param.pp - Removed entirely, contained parameters for deprecated separate powershell call for init.pp
+5. Updated readme file
