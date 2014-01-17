@@ -65,6 +65,25 @@ class citrix_xd7 (
   $licenseserver    = true,
   $desktopdirector  = true,
   $storefront       = true,
+  
+  #Xendesktop Database Information
+  $databaseserver         = '.\SQLEXPRESS',
+  $databasenamesite       = 'CitrixXD7Site',
+  $databasenamelogging    = 'CitrixXD7Logging',
+  $databasenamemonitor    = 'CitrixXD7Monitor',
+  $xd7site                = 'CitrixXD7',
+  $databaseuser           = undef,
+  $databasepassword       = undef,
+  
+    # License Server Information
+  $licenseservername  = 'localhost', # IP address or FQDN of the license server
+  $licenseserverport  = 27000, # TCP port used by the licensing server 
+  
+  # License Information
+  $productcode        = 'XDT', # Citrix Product (Xendesktop, Xenapp, etc.)
+  $productedition     = 'PLT', # Citrix Product Edition (Enterprise, Platinum, etc.)
+  $productversion     = '7.0', # Citrix Product Version Number (5,7,etc.)
+  $licensingmodel     = 'UserDevice', # Citrix Licensing Type (User/Device or Concurrent)
 )
 
 {
@@ -133,12 +152,15 @@ class citrix_xd7 (
       command   => "Add-WindowsFeature Net-Framework-Core",
       provider  => powershell,
       unless    =>  "(Get-WindowsFeature -name Net-Framework-Core).Installed", # Check if Net Framework has already been installed    
-  } ->
+  } 
   
   # Install Xendesktop 7 from installation source
   exec { 'Install XD':
     command => "XenDesktopServerSetup.exe /components $controller_install$desktopstudio_install$licenseserver_install$desktopdirector_install$storefront_install $sql_install /quiet /configure_firewall",
     path    => "$source",
+    require => Exec['Install dotnet'], # Require installation of the .NET Framework
+    timeout => 600 # 10 minute timeout due to the length of the install when SQL Express is installed
 }
 
+  Exec['Install dotnet'] -> Exec['Install XD'] -> Class['citrix_xd7::database'] -> Class['citrix_xd7::site_configuration'] -> Class['citrix_xd7::licensing']
 }

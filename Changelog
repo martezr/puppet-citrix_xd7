@@ -1,3 +1,9 @@
+1-17-2014
+----------------
+1. Added support for creating the XD Databases (Site, Monitor, and Logging)
+2. Added support for the creation of the XD site
+3. Added support for configuring the licensing
+
 1-8-2014
 ----------------
 1. Added a Changelog

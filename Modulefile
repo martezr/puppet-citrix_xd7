@@ -1,4 +1,4 @@
-name    'martez-citrix_xd7'
+name    'martezr-citrix_xd7'
 version '0.1.0'
 source ''
 author 'Martez Reed'
